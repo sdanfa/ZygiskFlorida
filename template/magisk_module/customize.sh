@@ -81,19 +81,19 @@ fi
 ui_print "- Extracting bundled undetected gadget"
 
 mkdir -p "$TMP_MODULE_DIR"
-extract "$ZIPFILE" "gadget/libgadget-$ARCH.so.gz" "$TMP_MODULE_DIR" true
-mv "$TMP_MODULE_DIR/libgadget-$ARCH.so.gz" "$TMP_MODULE_DIR/libgadget.so.gz"
+extract "$ZIPFILE" "gadget/libgadget-$ARCH.so.xz" "$TMP_MODULE_DIR" true
+mv "$TMP_MODULE_DIR/libgadget-$ARCH.so.xz" "$TMP_MODULE_DIR/libgadget.so.xz"
 rm -f "$TMP_MODULE_DIR/libgadget.so"
-$BUSYBOX_BIN gunzip "$TMP_MODULE_DIR/libgadget.so.gz"
+$BUSYBOX_BIN unxz "$TMP_MODULE_DIR/libgadget.so.xz"
 
 if [ "$IS64BIT" = true ]; then
   ARCH32="arm"
   [ "$ARCH" = "x64" ] && ARCH32="x86"
 
-  extract "$ZIPFILE" "gadget/libgadget-$ARCH32.so.gz" "$TMP_MODULE_DIR" true
-  mv "$TMP_MODULE_DIR/libgadget-$ARCH32.so.gz" "$TMP_MODULE_DIR/libgadget32.so.gz"
+  extract "$ZIPFILE" "gadget/libgadget-$ARCH32.so.xz" "$TMP_MODULE_DIR" true
+  mv "$TMP_MODULE_DIR/libgadget-$ARCH32.so.xz" "$TMP_MODULE_DIR/libgadget32.so.xz"
   rm -f "$TMP_MODULE_DIR/libgadget32.so"
-  $BUSYBOX_BIN gunzip "$TMP_MODULE_DIR/libgadget32.so.gz"
+  $BUSYBOX_BIN unxz "$TMP_MODULE_DIR/libgadget32.so.xz"
 fi
 
 extract "$ZIPFILE" "config.json.example" "$TMP_MODULE_DIR" true
