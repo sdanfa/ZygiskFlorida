@@ -1,9 +1,9 @@
 ext {
     // Magisk Module
-    magiskModuleId = "zygiskflorida"
-    moduleName = "ZygiskFlorida"
+    magiskModuleId = "zygiskundetected"
+    moduleName = "Zygiskundetected"
     moduleAuthor = "lico-n"
-    moduleDescription = "Injects florida gadget via zygisk."
+    moduleDescription = "Injects undetected gadget via zygisk."
     moduleVersion = "v1.9.0"
     moduleVersionCode = 12
 
@@ -12,6 +12,6 @@ ext {
     moduleMinRiruVersionName = "24.0.0"
     moduleMaxRiruApiVersion = 26
 
-    // Florida
-    floridaVersion = "17.5.2"
+    // undetected
+    undetectedVersion = "17.5.2"
 }
