@@ -18,16 +18,16 @@ dependencies {
     implementation("io.github.vvb2060.ndk:dobby:1.2")
 }
 
-task downloadFlorida(type: Download) {
+task downloadundetected(type: Download) {
     def downloadArchs = ["arm", "arm64", "x86_64", "x86"]
     def magiskArchs = ["arm", "arm64", "x64", "x86"]
 
     def sources = downloadArchs.collect{
-        arch -> "https://github.com/Ylarod/Florida/releases/download/${floridaVersion}/florida-gadget-${floridaVersion}-android-${arch}.so.gz".toString()
+        arch -> "https://github.com/zer0def/undetected-frida/releases/download/${undetectedVersion}/undetected-frida-gadget-${undetectedVersion}-android-${arch}.so.xz".toString()
     }
 
     def outputs = magiskArchs.collect{
-        arch ->  "libgadget-${arch}.so.gz".toString()
+        arch ->  "libgadget-${arch}.so.xz".toString()
     }
 
     def downloads = [sources, outputs].transpose().collectEntries()
@@ -43,7 +43,7 @@ task downloadFlorida(type: Download) {
 }
 
 android {
-    namespace = "zygisk.florida"
+    namespace = "zygisk.undetected"
     compileSdkVersion rootProject.ext.targetSdkVersion
     ndkVersion '25.2.9519653'
 
@@ -105,7 +105,7 @@ afterEvaluate {
 
         task("prepareMagiskFiles${variantCapped}", type: Sync) {
             dependsOn("assemble$variantCapped")
-            dependsOn downloadFlorida
+            dependsOn downloadundetected
 
             def templatePath = "$rootDir/template/magisk_module"
 
@@ -152,7 +152,7 @@ afterEvaluate {
                 from(templatePath) {
                     include("riru.sh")
                     def tokens = [
-                            "RIRU_MODULE_LIB_NAME"              : "zygiskflorida",
+                            "RIRU_MODULE_LIB_NAME"              : "zygiskundetected",
                             "RIRU_MODULE_API_VERSION"           : moduleMaxRiruApiVersion.toString(),
                             "RIRU_MODULE_MIN_API_VERSION"       : moduleMinRiruApiVersion.toString(),
                             "RIRU_MODULE_MIN_RIRU_VERSION_NAME" : moduleMinRiruVersionName,
@@ -164,7 +164,7 @@ afterEvaluate {
             doLast {
                 fileTree("$magiskDir/lib").visit { f ->
                     if (!f.directory) return
-                    def srcPath = Paths.get("${f.file.absolutePath}/libzygiskflorida.so")
+                    def srcPath = Paths.get("${f.file.absolutePath}/libzygiskundetected.so")
                     def dstPath = Paths.get("$magiskDir/lib/${f.path}.so")
                     Files.move(srcPath, dstPath)
                     new File("$magiskDir/lib/${f.path}").deleteDir()
