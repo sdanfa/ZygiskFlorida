@@ -13,5 +13,5 @@ ext {
     moduleMaxRiruApiVersion = 26
 
     // Florida
-    floridaVersion = "17.5.1"
+    floridaVersion = "17.5.2"
 }
